@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title> Calculadora Simples </title>
+    <style>
+        body {
+            background-color: rgb(37, 11, 66);
+            font-family: monospace;
+            color: aliceblue;
+            font-size: 3vw;
+            text-align: center;
+        }
+
+        .background {
+            width: 50vw;
+            margin: auto;
+        }
+        .containerFlex {
+            margin: auto;
+            display: flex;
+            padding: 1vw;
+        }
+
+        .containerFlex > div { /* > afeta só as crianças */
+            border: 0.6vw solid rgb(82, 82, 145);
+            border-radius: 1.5vw;
+            min-height: 1vh;
+            min-width: 10vw;
+            padding: 0.7vw;
+            margin: 0.5vw;
+            background-color: aliceblue;
+            color: black;
+            font-weight: bold;
+        }
+
+        .containerFlex > button { /* > afeta só as crianças */
+            border: 0.4vw solid rgb(82, 82, 145);
+            border-radius: 1.5vw;
+            min-height: 5vh;
+            min-width: 10vw;
+            padding: 0.7vw;
+            margin: 0.5vw;
+            background-color: aliceblue;
+            color: black;
+            font-weight: bold;
+            font-size: 2vw;
+            transition-duration: 0.5s;
+        }
+
+        .containerFlex > button:hover { /* > afeta só as crianças */
+            background-color:rgb(80, 255, 203);
+        }
+
+    </style>
+</head>    
+
+<h1> Calculadora </h1>   
+
+
+<div class="background">
+    <div class="containerFlex">
+        <div id="res" style="min-width: 19vw;">Resultados</div>
+        <div id="ope"></div>
+        <button id="reset">Reset</button>
+    </div>
+
+    <div class="containerFlex">
+        <button id="7">7</button>
+        <button id="8">8</button>
+        <button id="9">9</button>
+        <button id="resto"> Resto </button>
+    </div>
+    <div class="containerFlex">
+        <button id="4">4</button>
+        <button id="5">5</button>
+        <button id="6">6</button>
+        <button id="x"> x </button>
+    </div>
+    <div class="containerFlex">
+        <button id="1">1</button>
+        <button id="2">2</button>
+        <button id="3">3</button>
+        <button id="÷"> ÷ </button>
+    </div>
+    <div class="containerFlex">
+        <button id="."> , </button>
+        <button id="0"> 0 </button>
+        <button id="+"> + </button>
+        <button id="="> = </button>
+    </div>
+</div>
+
+</html>
+
+<!--Javascript em si começa aqui-->
+<!--Jquery para adicionar os botões-->
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script> 
+var botoes = $("button");
+var n1 = 0;
+var n2 = 0;
+var op = false;
+var operator = 0;
+var done = false;
+
+botoes.on("click", function(){
+    var n = event.target.id;
+    if (document.getElementById("res").innerHTML == "Resultados" || done) {
+        document.getElementById("res").innerHTML = "";
+        document.getElementById("ope").innerHTML = "";
+        done = false;
+    }
+    if (n == "reset"){
+        n1 = 0;
+        n2 = 0;
+        op = false;
+        operator = 0;
+        done = false;
+        document.getElementById("res").innerHTML = "";
+        document.getElementById("ope").innerHTML = "";
+    }
+    else if (n != "+" && n != "-" && n != "=" && n != "x" && n != "÷" && n != "resto"){
+        document.getElementById("res").innerHTML = document.getElementById("res").innerHTML + n;
+    }
+    else {
+        
+        if (!op && n != "="){
+            n1 = document.getElementById("res").innerHTML;
+            document.getElementById("res").innerHTML = "";
+            op = true;
+            operator = n;
+            document.getElementById("ope").innerHTML = operator;
+        }
+        else if (op && n != "="){
+            alert("Somente uma operação de cada vez!");
+        }
+        if (op && n == "="){
+            n2 = document.getElementById("res").innerHTML;
+            document.getElementById("ope").innerHTML = n;
+            if (operator == "+"){
+                document.getElementById("res").innerHTML = Number(n1) + Number(n2);
+                done = true;
+            }
+            if (operator == "-"){
+                document.getElementById("res").innerHTML = Number(n1) - Number(n2);
+                done = true;
+            }
+            if (operator == "x"){
+                document.getElementById("res").innerHTML = Number(n1) * Number(n2);
+                done = true;
+            }
+            if (operator == "÷"){
+                document.getElementById("res").innerHTML = Number(n1) / Number(n2);
+                done = true;
+            }
+            if (operator == "resto"){
+                document.getElementById("res").innerHTML = Number(n1) % Number(n2);
+                done = true;
+            }
+            op = false;
+        }
+    }
+    
+});
+
+
+</script>

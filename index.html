@@ -70,7 +70,7 @@
         <button id="7">7</button>
         <button id="8">8</button>
         <button id="9">9</button>
-        <button id="resto"> Resto </button>
+
     </div>
     <div class="containerFlex">
         <button id="4">4</button>
@@ -88,6 +88,12 @@
         <button id="."> , </button>
         <button id="0"> 0 </button>
         <button id="+"> + </button>
+        <button id="-"> - </button>
+    </div>
+    <div class="containerFlex">
+        <button id="resto"> Resto </button>
+        <button id="00"> 00 </button>
+        <button id="%"> % </button>
         <button id="="> = </button>
     </div>
 </div>
@@ -121,11 +127,13 @@ botoes.on("click", function(){
         document.getElementById("res").innerHTML = "";
         document.getElementById("ope").innerHTML = "";
     }
-    else if (n != "+" && n != "-" && n != "=" && n != "x" && n != "÷" && n != "resto"){
+    else if (n != "+" && n != "-" && n != "=" && n != "x" && n != "÷" && n != "resto" && n!= "%"){
         document.getElementById("res").innerHTML = document.getElementById("res").innerHTML + n;
     }
+    else if (n == "%"){
+        document.getElementById("res").innerHTML = document.getElementById("res").innerHTML / 100 ;
+    }
     else {
-        
         if (!op && n != "="){
             n1 = document.getElementById("res").innerHTML;
             document.getElementById("res").innerHTML = "";
@@ -139,26 +147,28 @@ botoes.on("click", function(){
         if (op && n == "="){
             n2 = document.getElementById("res").innerHTML;
             document.getElementById("ope").innerHTML = n;
-            if (operator == "+"){
-                document.getElementById("res").innerHTML = Number(n1) + Number(n2);
-                done = true;
-            }
-            if (operator == "-"){
-                document.getElementById("res").innerHTML = Number(n1) - Number(n2);
-                done = true;
-            }
-            if (operator == "x"){
-                document.getElementById("res").innerHTML = Number(n1) * Number(n2);
-                done = true;
-            }
-            if (operator == "÷"){
-                document.getElementById("res").innerHTML = Number(n1) / Number(n2);
-                done = true;
-            }
-            if (operator == "resto"){
-                document.getElementById("res").innerHTML = Number(n1) % Number(n2);
-                done = true;
-            }
+            switch(operator){
+                case "+":
+                    document.getElementById("res").innerHTML = Number(n1) + Number(n2);
+                    done = true;
+                    break;
+                case "-":
+                    document.getElementById("res").innerHTML = Number(n1) - Number(n2);
+                    done = true;         
+                    break;          
+                case "x":
+                    document.getElementById("res").innerHTML = Number(n1) * Number(n2);
+                    done = true;         
+                    break; 
+                case "÷":
+                    document.getElementById("res").innerHTML = (Number(n1) / Number(n2));
+                    done = true;         
+                    break; 
+                case "resto":
+                    document.getElementById("res").innerHTML = Number(n1) % Number(n2);
+                    done = true;         
+                    break; 
+            } 
             op = false;
         }
     }
